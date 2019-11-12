@@ -98,6 +98,7 @@ if __name__ == '__main__':
                         found = True
                 #begin the form comparison against the reference human (and maybe the previous form)
                 elif found is True:
+                    cv2.line(image, (0, int(image.shape[0])), (int(image.shape[1]), int(image.shape[0]/2)), (0, 255, 0), 20, 20)
                     #commented out code regarding the difference between the previous values
                     #if elbowRX is not None and humans[0].body_parts.get(3) is not None:
                     #    difference = elbowRX - humans[0].body_parts.get(3).x
@@ -119,13 +120,11 @@ if __name__ == '__main__':
                         refdifferenceElbowWristXR = refHuman.body_parts[3].y - refHuman.body_parts[4].y 
                         refdifferenceElbowWristYR =  refHuman.body_parts[3].x - refHuman.body_parts[4].x 
                         refangleEWR = math.atan2(refdifferenceElbowWristXR, refdifferenceElbowWristYR)
-                        
+
         logger.debug('postprocess+')
         image = TfPoseEstimator.draw_humans(image, humans, imgcopy=False)
         logger.debug('show+')
-        #placing the lines in the middle, remove when done
-        cv2.line(image, (int(image.shape[1]/2), 0), (int(image.shape[1]/2), int(image.shape[0])), (255, 0, 0), 20, 20)
-        cv2.line(image, (0, int(image.shape[0]/2)), (int(image.shape[1]), int(image.shape[0]/2)), (255, 0, 0), 20, 20)
+        
         #Place the FPS tags in the top left corner, removeable when done
         cv2.putText(image,
                     "FPS: %f" % (1.0 / (time.time() - fps_time)),
