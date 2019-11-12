@@ -9,7 +9,13 @@ no module named numpy:
 pip3 install numpy
 
 Error: command gcc failed with exit status 1:
-sudo apt-get install python-dev 
+sudo apt-get install python-dev
+
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+brew install gcc
+
+pip3 install -r requirements.txt
 
 
 #running
