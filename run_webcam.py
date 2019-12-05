@@ -62,7 +62,6 @@ if __name__ == '__main__':
     elbowRX = 0
     while True:
         ret_val, image = cam.read()
-        cv2.Flip(image, flipMode=-1)
         #place the current frame onto the image
         cv2.putText(image,
                     "Im: %d" % count,
@@ -132,6 +131,9 @@ if __name__ == '__main__':
                     (0, 255, 0), 2)
         #show the final image    
         cv2.imshow('tf-pose-estimation result', image)
+        #set the file name for output testing to gather information on which image lines up with which point values
+        imgName = str(count) + ".png"
+        cv2.imwrite(imgName, image)
         fps_time = time.time()
         if cv2.waitKey(1) == 27:
             break
