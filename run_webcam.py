@@ -97,28 +97,51 @@ if __name__ == '__main__':
                         found = True
                 #begin the form comparison against the reference human (and maybe the previous form)
                 elif found is True:
+                    #placing a trial green bar at the bottom
                     cv2.line(image, (0, int(image.shape[0])), (int(image.shape[1]), int(image.shape[0]/2)), (0, 255, 0), 20, 20)
+
                     #commented out code regarding the difference between the previous values
                     #if elbowRX is not None and humans[0].body_parts.get(3) is not None:
                     #    difference = elbowRX - humans[0].body_parts.get(3).x
                     #    print("%f d %f elbocurrent %f elbowpast " % (difference, humans[0].body_parts.get(3).x,  elbowRX))
                     #    elbowRX = humans[0].body_parts[3].x
-                    # Make sure the current human has all of the required comparison points
-                    if humans[0].body_parts.get(2) is not None and humans[0].body_parts.get(3) is not None and humans[0].body_parts.get(4) is not None:
+
+                    # Make sure the right shoulder and elbow are defined
+                    if humans[0].body_parts.get(2) is not None and humans[0].body_parts.get(3) is not None:
                         #finding the angle between the body parts
                         differenceShoulderElbowXR = humans[0].body_parts[2].x - humans[0].body_parts[3].x 
-                        differenceShoulderElbowYR = humans[0].body_parts[2].y - humans[0].body_parts[3].y 
+                        differenceShoulderElbowYR = humans[0].body_parts[2].y - humans[0].body_parts[3].y
                         angleSER = math.atan2(differenceShoulderElbowXR, differenceShoulderElbowYR)
+                        refdifferenceShoulderElbowXR = refHuman.body_parts[2].x - refHuman.body_parts[3].x 
+                        refdifferenceShoulderElbowYR = refHuman.body_parts[2].y - refHuman.body_parts[3].y 
+                        refangleSER = math.atan2(refdifferenceShoulderElbowXR, refdifferenceShoulderElbowYR)
+                    
+                    # Make sure that the Right elbow and wrist are defined
+                    if humans[0].body_parts.get(3) is not None and humans[0].body_parts.get(4) is not None:
                         differenceElbowWristXR = humans[0].body_parts[3].y - humans[0].body_parts[4].y 
                         differenceElbowWristYR =  humans[0].body_parts[3].x - humans[0].body_parts[4].x 
                         angleEWR = math.atan2(differenceElbowWristXR, differenceElbowWristYR)
                         #finding the angle of the reference human
-                        refdifferenceShoulderElbowXR = refHuman.body_parts[2].x - refHuman.body_parts[3].x 
-                        refdifferenceShoulderElbowYR = refHuman.body_parts[2].y - refHuman.body_parts[3].y 
-                        refangleSER = math.atan2(refdifferenceShoulderElbowXR, refdifferenceShoulderElbowYR)
                         refdifferenceElbowWristXR = refHuman.body_parts[3].y - refHuman.body_parts[4].y 
                         refdifferenceElbowWristYR =  refHuman.body_parts[3].x - refHuman.body_parts[4].x 
                         refangleEWR = math.atan2(refdifferenceElbowWristXR, refdifferenceElbowWristYR)
+
+                    if humans[0].body_parts.get(5) is not None and humans[0].body_parts.get(6) is not None:
+                        differenceShoulderElbowXR = humans[0].body_parts[5].x - humans[0].body_parts[6].x 
+                        differenceShoulderElbowYR = humans[0].body_parts[5].y - humans[0].body_parts[6].y
+                        angleSER = math.atan2(differenceShoulderElbowXR, differenceShoulderElbowYR)
+                        refdifferenceShoulderElbowXR = refHuman.body_parts[5].x - refHuman.body_parts[6].x 
+                        refdifferenceShoulderElbowYR = refHuman.body_parts[5].y - refHuman.body_parts[6].y 
+                        refangleSER = math.atan2(refdifferenceShoulderElbowXR, refdifferenceShoulderElbowYR)
+
+
+                    if humans[0].body_parts.get(6) is not None and humans[0].body_parts.get(7) is not None:
+                        differenceShoulderElbowXR = humans[0].body_parts[6].x - humans[0].body_parts[7].x 
+                        differenceShoulderElbowYR = humans[0].body_parts[6].y - humans[0].body_parts[7].y
+                        angleSER = math.atan2(differenceShoulderElbowXR, differenceShoulderElbowYR)
+                        refdifferenceShoulderElbowXR = refHuman.body_parts[6].x - refHuman.body_parts[7].x 
+                        refdifferenceShoulderElbowYR = refHuman.body_parts[6].y - refHuman.body_parts[7].y 
+                        refangleSER = math.atan2(refdifferenceShoulderElbowXR, refdifferenceShoulderElbowYR)
 
         logger.debug('postprocess+')
         image = TfPoseEstimator.draw_humans(image, humans, imgcopy=False)
